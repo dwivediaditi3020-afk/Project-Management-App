@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = "https://project-management-app-production-3c12.up.railway.app";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Auto redirect if already logged in
   if (localStorage.getItem("token")) {
     window.location.href = "/dashboard";
   }
@@ -17,7 +18,7 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         email,
         password
       });
@@ -53,60 +54,42 @@ function Login() {
           color: "#e2e8f0"
         }}
       >
-        <h2 style={{ marginBottom: "10px" }}>🔐 Welcome Back</h2>
-        <p style={{ fontSize: "13px", color: "#94a3b8", marginBottom: "20px" }}>
-          Login to manage your projects
-        </p>
+        <h2>🔐 Welcome Back</h2>
 
-        {/* Email */}
         <input
           type="email"
           placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-          onFocus={(e) =>
-            (e.target.style.boxShadow = "0 0 0 1px #3b82f6")
-          }
-          onBlur={(e) => (e.target.style.boxShadow = "none")}
           style={{
             width: "100%",
             padding: "10px",
             marginBottom: "15px",
             borderRadius: "8px",
             border: "none",
-            outline: "none",
             background: "#0f172a",
-            color: "white",
-            transition: "0.2s"
+            color: "white"
           }}
         />
 
-        {/* Password */}
         <input
           type="password"
           placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-          onFocus={(e) =>
-            (e.target.style.boxShadow = "0 0 0 1px #3b82f6")
-          }
-          onBlur={(e) => (e.target.style.boxShadow = "none")}
           style={{
             width: "100%",
             padding: "10px",
             marginBottom: "20px",
             borderRadius: "8px",
             border: "none",
-            outline: "none",
             background: "#0f172a",
-            color: "white",
-            transition: "0.2s"
+            color: "white"
           }}
         />
 
-        {/* Button */}
         <button
           onClick={handleLogin}
           disabled={loading}
@@ -115,26 +98,16 @@ function Login() {
             padding: "10px",
             borderRadius: "8px",
             border: "none",
-            background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
+            background: "#3b82f6",
             color: "white",
-            fontWeight: "bold",
-            cursor: "pointer",
-            opacity: loading ? 0.7 : 1,
-            transition: "0.2s"
+            cursor: "pointer"
           }}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* Demo Credentials */}
-        <p style={{ marginTop: "15px", fontSize: "12px", color: "#94a3b8" }}>
-          Demo: <br />
-          aditi@test.com / 123456
-        </p>
-
-        {/* Footer */}
-        <p style={{ fontSize: "11px", color: "#64748b", marginTop: "10px" }}>
-          Project Management App
+        <p style={{ marginTop: "10px", fontSize: "12px" }}>
+          Demo: aditi@test.com / 123456
         </p>
       </div>
     </div>
